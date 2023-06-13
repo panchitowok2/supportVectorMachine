@@ -89,9 +89,6 @@ X_train = pca.fit_transform(X_train)
 X_test = pca.transform(X_test)
 
 
-print('como queda despues de aplicar PCA al dataset: ')
-print(X_train)
-
 clf = SVM(n_iters=1000)
 clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
@@ -102,8 +99,27 @@ def accuracy(y_true, y_pred):
 
 print("SVM Accuracy: ", accuracy(y_test, predictions))
 
-plt.scatter(X_train[:, 0],X_train[:, 1])
-plt.xlabel('Eje X')
-plt.ylabel('Eje Y')
-plt.title('Nube de puntos de datos de entrenamiento')
+# Definir los colores para cada clase
+colores = {0: 'red', 1: 'blue'}
+
+# Definir los nombres de las clases
+nombres_clases = {0: 'Clase not fire', 1: 'Clase fire'}
+
+# Crear la figura y el subplot
+fig, ax = plt.subplots()
+
+# Iterar sobre las clases únicas en y_train
+for clase in np.unique(y_train):
+    # Obtener los índices de los puntos de la clase actual
+    indices = np.where(y_train == clase)
+    # Obtener las coordenadas x e y correspondientes a los puntos de la clase actual
+    x = X_train[indices, 0]
+    y = X_train[indices, 1]
+    # Graficar los puntos con el color correspondiente a la clase actual
+    ax.scatter(x, y, color=colores[clase], label=nombres_clases[clase])
+
+# Agregar leyenda
+ax.legend()
+
+# Mostrar el gráfico
 plt.show()
