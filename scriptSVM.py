@@ -72,7 +72,6 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-"""
 # performing preprocessing part
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
@@ -89,11 +88,10 @@ pca = PCA(n_components = 2)
 X_train = pca.fit_transform(X_train)
 X_test = pca.transform(X_test)
 
-explained_variance = pca.explained_variance_ratio_
-### 
+
 print('como queda despues de aplicar PCA al dataset: ')
 print(X_train)
-"""
+
 clf = SVM(n_iters=1000)
 clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
@@ -103,3 +101,9 @@ def accuracy(y_true, y_pred):
     return accuracy
 
 print("SVM Accuracy: ", accuracy(y_test, predictions))
+
+plt.scatter(X_train[:, 0],X_train[:, 1])
+plt.xlabel('Eje X')
+plt.ylabel('Eje Y')
+plt.title('Nube de puntos de datos de entrenamiento')
+plt.show()
