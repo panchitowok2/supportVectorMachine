@@ -74,6 +74,7 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
+"""
 # preprocesamiento
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
@@ -88,6 +89,7 @@ pca = PCA(n_components = 2)
 
 X_train = pca.fit_transform(X_train)
 X_test = pca.transform(X_test)
+"""
 
 # Entrenamos el modelo
 clf = SVM(cantidad_de_iteraciones=1000)
@@ -102,6 +104,7 @@ def calcular_tasa_de_acierto(y_true, y_pred):
 
 print("SVM Accuracy: ", calcular_tasa_de_acierto(y_test, predictions))
 
+"""
 # Definir los colores para cada clase
 colores = {-1: 'red', 1: 'blue'}
 
@@ -158,6 +161,7 @@ plt.title('SVM')
 
 # Mostrar el gráfico
 plt.show()
+"""
 
 from sklearn.metrics import confusion_matrix
 
