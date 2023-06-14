@@ -74,23 +74,6 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-"""
-# preprocesamiento
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
-
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
-
-# aplicamos pca
-from sklearn.decomposition import PCA
-
-pca = PCA(n_components = 2)
-
-X_train = pca.fit_transform(X_train)
-X_test = pca.transform(X_test)
-"""
-
 # Entrenamos el modelo
 clf = SVM(cantidad_de_iteraciones=1000)
 clf.entrenamiento(X_train, y_train)
@@ -104,85 +87,26 @@ def calcular_tasa_de_acierto(y_true, y_pred):
 
 print("SVM Accuracy: ", calcular_tasa_de_acierto(y_test, predictions))
 
-"""
-# Definir los colores para cada clase
-colores = {-1: 'red', 1: 'blue'}
-
-# Definir los nombres de las clases
-nombres_clases = {-1: 'Clase not fire', 1: 'Clase fire'}
-
-# Crear la figura y el subplot
-fig, ax = plt.subplots()
-
-# Iterar sobre las clases únicas en y_train
-for clase in np.unique(y_train):
-    # Obtener los índices de los puntos de la clase actual
-    indices = np.where(y_train == clase)
-    # Obtener las coordenadas x e y correspondientes a los puntos de la clase actual
-    x = X_train[indices, 0]
-    y = X_train[indices, 1]
-    # Graficar los puntos con el color correspondiente a la clase actual
-    ax.scatter(x, y, color=colores[clase], label=nombres_clases[clase])
-
-# Agregar leyenda
-ax.legend()
-
-# Mostrar el gráfico
-plt.show()
-
-# Obtener los límites del gráfico
-x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
-y_min, y_max = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
-
-# Generar un rango de valores para x e y
-xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.01),
-                     np.arange(y_min, y_max, 0.01))
-
-# Preparar los datos para realizar las predicciones en la malla
-mesh_input = np.c_[xx.ravel(), yy.ravel()]
-
-# Realizar las predicciones en la malla
-Z = clf.predecir(mesh_input)
-Z = Z.reshape(xx.shape)
-
-# Graficar el contorno de la región de decisión
-plt.contourf(xx, yy, Z, alpha=0.5)
-
-# Graficar los puntos de entrenamiento con los colores correspondientes a las clases
-for clase in np.unique(y_train):
-    indices = np.where(y_train == clase)
-    x = X_train[indices, 0]
-    y = X_train[indices, 1]
-    plt.scatter(x, y, color=colores[clase], label=nombres_clases[clase])
-
-# Agregar leyenda y título
-plt.legend()
-plt.title('SVM')
-
-# Mostrar el gráfico
-plt.show()
-"""
-
 from sklearn.metrics import confusion_matrix
 
-# Define the class labels
+# Definimos clases
 class_labels = ['not fire', 'fire']
 
-# Make predictions
+# Predecimos
 predictions = clf.predecir(X_test)
 
-# Calculate accuracy
+# Calculamos accuracy
 accuracy = calcular_tasa_de_acierto(y_test, predictions)
 
-# Check unique values in y_test
+# Chequeamos los valores unicos de y_test
 unique_labels = np.unique(y_test)
-print("Unique labels in y_test:", unique_labels)
+print("Etiqueras de y_test:", unique_labels)
 
-# Update class labels if necessary
+# Actualizamos si es necesario
 if not set(class_labels).issubset(unique_labels):
     class_labels = unique_labels
 
-# Create confusion matrix
+# Mostramos matriz de confusion
 cm = confusion_matrix(y_test, predictions, labels=class_labels)
 print("Confusion Matrix:")
 print(cm)

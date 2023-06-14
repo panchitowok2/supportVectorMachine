@@ -161,24 +161,24 @@ plt.show()
 
 from sklearn.metrics import confusion_matrix
 
-# Define the class labels
+# Definimos las clases
 class_labels = ['not fire', 'fire']
 
-# Make predictions
+# Predecimos
 predictions = clf.predecir(X_test)
 
-# Calculate accuracy
+# Calculamos accuracy
 accuracy = calcular_tasa_de_acierto(y_test, predictions)
 
-# Check unique values in y_test
+# Chequeamos los valores unicos en y_test
 unique_labels = np.unique(y_test)
-print("Unique labels in y_test:", unique_labels)
+print("Etiquetas de y_test:", unique_labels)
 
-# Update class labels if necessary
+# Actualizamos si es necesario
 if not set(class_labels).issubset(unique_labels):
     class_labels = unique_labels
 
-# Create confusion matrix
+# mostramos matriz de confusion
 cm = confusion_matrix(y_test, predictions, labels=class_labels)
 print("Confusion Matrix:")
 print(cm)
